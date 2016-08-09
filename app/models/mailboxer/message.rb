@@ -11,7 +11,8 @@ class Mailboxer::Message < Mailboxer::Notification
     where(:conversation_id => conversation.id)
   }
 
-  mount_uploader :attachment, Mailboxer::AttachmentUploader
+  has_attached_file :attachment
+  validates_attachment :attachment, content_type: {content_type: ["image/jpeg", "image/png", 'application/pdf']}, size: { less_than: 10.megabytes }
 
   class << self
     #Sets the on deliver callback method.
